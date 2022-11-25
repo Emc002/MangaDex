@@ -84,17 +84,21 @@
     }
 
     function up(offset) {
-      offset++
+      offset+=H
        Z = offset;
-       console.log(H);
+       view(Z)
+       console.log(Z)
     }
 
     function down(offset) {
-      offset--
+      offset-=H
       if (offset <= 0) {
         Z = 0;
+        view(H);
+
       } else {
         Z = offset;
+        view(H);
       }
       console.log(Z)
       return Z
