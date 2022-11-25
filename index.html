@@ -48,7 +48,6 @@
                 <a>
                   <a id="changer">ITEM QUANTITY</a>
                   <input type="number" class="custom form-control" onchange="view()" id="list">
-                  <input type="number" class="custom nana form-control" value="1" id="list1">
 
                 </a>
               </ul>
@@ -61,7 +60,6 @@
               <ul><a><button type="number" class="custom" onclick="down(Z)" value="0" id="list">Prev</button></a>
                 <a><button type="number" class="custom" onclick="up(Z)" value="0" id="list">Next</button></a> 
                 <a><button type="number" class="custom" onclick="checki()" value="0" id="list">Next</button></a> </ul>
-
             </div>
           </div>
         </div>
@@ -71,7 +69,6 @@
     </div>
   </div>
   <script>
-    let Z=1;
     let H = 6;
     function checki()
     {
@@ -84,21 +81,16 @@
 
     }
     
-
     function view(){
 
       H = Number(document.getElementById("list").value);
-      Z = Number(document.getElementById("list1").value);
       console.log(Z)
-
       getData("https://api.mangadex.org/manga?offset="+Z+"&limit=" + H + "&includes[]=cover_art&contentRating[]=safe");
     }
 
-
     function up(offset) {
       offset++
-      Z = offset;
-
+     let Z = offset;
     }
 
     function down(offset) {
@@ -111,10 +103,6 @@
       console.log(Z)
       return Z
     }
-
-    
-
-
 
     let collection = document.getElementById("center");
 
