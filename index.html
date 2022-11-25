@@ -27,10 +27,10 @@
 
         <div class="collapse search navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
-            <input class="form-control mr-sm-2 mx-2" type="search" placeholder="Search" aria-label="Search">
+            <input class="form-control mr-sm-2 mx-2" id="title" type="search" placeholder="Search" aria-label="Search">
             </li>
             <li class="nav-item">
-              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+              <button class="btn btn-outline-success my-2 my-sm-0" onclick="sear()" type="submit">Search</button>
             </li>
           </ul>
         </div>
@@ -56,8 +56,8 @@
                 <a>PAGE</a>
                 <p id="pagination">1</p>
               </ul>
-              <ul><a><button type="number" class="custom" onclick="down(Z)" value="0" id="list">Prev</button></a>
-                <a><button type="number" class="custom" onclick="up(Z)" value="0" id="list">Next</button></a> 
+              <ul><a><button type="number" class="btn btn-light" onclick="down(Z)" value="0" id="list">Prev</button></a>
+                <a><button type="number" class="btn btn-light" onclick="up(Z)" value="0" id="list">Next</button></a> 
             </div>
           </div>
         </div>
@@ -75,12 +75,19 @@
       getData("https://api.mangadex.org/manga?offset=1&limit=" + H + "&includes[]=cover_art&contentRating[]=safe");
 
     }
+
+    let Search = ""
+
+    function sear(){
+      Search = document.getElementById("title").value;
+      view(Search); 
+    }
     
     function view(){
 
       H = Number(document.getElementById("list").value);
       console.log(Z)
-      getData("https://api.mangadex.org/manga?offset="+Z+"&limit=" + H + "&includes[]=cover_art&contentRating[]=safe");
+      getData("https://api.mangadex.org/manga?offset="+Z+"&limit=" + H + "&includes[]=cover_art&contentRating[]=safe&title="+Search);
     }
 
     function up(offset) {
