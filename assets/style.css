@@ -1,6 +1,6 @@
 body{
   background-color: #12273b;
- 
+  font-family: 'Ubuntu', sans-serif;
 
 }
 
@@ -97,4 +97,8 @@ img{
   .side{
     color: #fff;
     width: 14rem;
+  }
+
+  #page{
+    font-size: 2rem;
   }

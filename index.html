@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MANGADATA</title>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300&family=Ubuntu:wght@500&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="assets/css/bootstrap.css">
   <link rel="stylesheet" href="assets/css/bootstrap.css.map">
   <link rel="stylesheet" href="assets/style.css">
@@ -47,17 +51,17 @@
               <ul class="sidebr">
                 <a>
                   <a id="changer">ITEM QUANTITY</a>
-                  <input type="number" class="custom form-control" onchange="view()" id="list">
+                  <input type="number" class="custom form-control" value="6" onchange="view()" id="list">
                 </a>
               </ul>
             </div>
             <div class="col-12 sidemenu s2 yox" id="s2">
               <ul>
                 <a>PAGE</a>
-                <p id="pagination">1</p>
+                <p id="page">1</p>
               </ul>
               <ul><a><button type="number" class="btn btn-light" onclick="down(Z)" value="0" id="list">Prev</button></a>
-                <a><button type="number" class="btn btn-light" onclick="up(Z)" value="0" id="list">Next</button></a> 
+                <a><button type="number" class="btn btn-light" onclick="up(Z)" value="0" id="list">Next</button></a>
             </div>
           </div>
         </div>
@@ -67,44 +71,59 @@
     </div>
   </div>
   <script>
-    let Z =1;
+    let Z = 1;
+    let P = 1;
+    let Y = 1;
     let H = 6;
+    let T = 0;
+    let scroll = 0;
 
     start(H);
-    function start(H){
+
+    function start(H) {
       getData("https://api.mangadex.org/manga?offset=1&limit=" + H + "&includes[]=cover_art&contentRating[]=safe");
 
     }
 
     let Search = ""
 
-    function sear(){
+    function sear() {
       Search = document.getElementById("title").value;
-      view(Search); 
+      view(Search);
     }
-    
-    function view(){
+
+    function view() {
 
       H = Number(document.getElementById("list").value);
-      console.log(Z)
-      getData("https://api.mangadex.org/manga?offset="+Z+"&limit=" + H + "&includes[]=cover_art&contentRating[]=safe&title="+Search);
+      scroll = H + T;
+      getData("https://api.mangadex.org/manga?offset=" + Z + "&limit=" +scroll+
+        "&includes[]=cover_art&contentRating[]=safe&title=" + Search);
     }
 
+    let page = document.getElementById("page");
+
     function up(offset) {
-      offset+=H
-       Z = offset;
-       view(Z)
-       console.log(Z)
+      offset += H
+      Z = offset;
+      P++;
+      page.innerHTML = P;
+      view(Z)
+      console.log(Z)
     }
 
     function down(offset) {
-      offset-=H
+      offset -= H
       if (offset <= 0) {
         Z = 0;
+        P--;
+        page.innerHTML = P;
         view(H);
+
 
       } else {
         Z = offset;
+        P--;
+        page.innerHTML = P;
         view(H);
       }
       console.log(Z)
@@ -123,7 +142,7 @@
         mangaData = data.data;
       })
 
-      for (let L = 0; L <mangaData.length; L++) {
+      for (let L = 0; L < mangaData.length; L++) {
         for (let j = 0; j < mangaData[L].relationships.length; j++) {
           if (mangaData[L].relationships[j].type == "cover_art") {
             imgData = "https://uploads.mangadex.org/covers/" + mangaData[L].id + "/" + mangaData[L].relationships[j]
