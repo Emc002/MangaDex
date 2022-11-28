@@ -1,5 +1,4 @@
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -34,7 +33,7 @@
             <input class="form-control mr-sm-2 mx-2" id="title" type="search" placeholder="Search" aria-label="Search">
             </li>
             <li class="nav-item">
-              <button class="btn btn-outline-success my-2 my-sm-0" onclick="sear()" type="submit">Search</button>
+              <button class="btn buton my-2 my-sm-0" onclick="sear()" type="submit">Search</button>
             </li>
           </ul>
         </div>
@@ -43,7 +42,7 @@
     </div>
     <div class="row">
       <div class="col-lg-2 divone">
-        <div class="side position-fixed">
+        <div id="process" class="side position-fixed">
 
 
           <div class="row rowside yoxy">
@@ -77,23 +76,19 @@
     let H = 6;
     let T = 0;
     let scroll = 0;
-
-    start(H);
-
-    function start(H) {
-      getData("https://api.mangadex.org/manga?offset=1&limit=" + H + "&includes[]=cover_art&contentRating[]=safe");
-
-    }
-
+    
+    window.addEventListener('scroll', () => {
+      document.getElementById("process").classList.toggle
+    ('sideOn', window.scrollY  > 0)
+}
+)
     let Search = ""
-
     function sear() {
       Search = document.getElementById("title").value;
       view(Search);
     }
-
+    view()
     function view() {
-
       H = Number(document.getElementById("list").value);
       scroll = H + T;
       getData("https://api.mangadex.org/manga?offset=" + Z + "&limit=" +scroll+
@@ -150,10 +145,14 @@
           }
         }
 
-        Title += "<div class='box nox col-3 table-responsive'><h4 class='judul'>" + mangaData[L].attributes.title.en +
-          "</h4>" + "<br>" + "<img width='200' height='220' src=" + imgData + ">" +
-          "<div class='mBox col-12 table-responsive'> <p class='desc'>" +
-          mangaData[L].attributes.description.en + "</p> </div></div>";
+        Title +=
+        "<div class='vl '><p>MORE ITEM</p></div><div class='box nox col-3 table-responsive'><div class='judul'>"
+          + mangaData[L].attributes.title.en +
+          "</div>"
+          + "<br>"
+          + "<img width='290' height='410' src=" + imgData + ">" +
+          " <div class='desc'><p maxlength='10'>" +
+          mangaData[L].attributes.description.en + "</p></div></div>";
       }
       collection.innerHTML = Title;
     }
